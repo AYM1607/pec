@@ -2,9 +2,7 @@ name: test
 on: [push, workflow_dispatch]
 jobs:
   test:
-    # Run on the self hosted runner and only on the base repo
-    if: github.repository == 'AYM1607/pec' && (github.event_name != 'pull_request' || !github.event.pull_request.head.repo.fork)
-    runs-on: self-hosted-x64
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
