@@ -5,43 +5,22 @@
 
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
 
-# Tiny Tapeout Verilog Project Template
+PEC (pronounced peck) is a my entry to [Jane Street's chip design competition](https://blog.janestreet.com/protocol-emulator-asic-competition/). It's binary compatible with the RP2040 PIO ISA (v0), with (hopefully) a few twists if I have enough time. The competition calls out for novelty and flexibility, given I'm a late solo competitor, novelty of the design is pretty much out the window, and I'll have to make up for it on my writeup.
 
-- [Read the documentation for project](docs/info.md)
+Being binary compatible with PIO v0 means that I'm outsourcing the ISA design to RPi, and I can focus on microarchitecutre, simulation, and verification.
 
-## What is Tiny Tapeout?
+I'm using a ULX3S as a prototyping platform, and Pico 2 that'll serve as a quasi [TT ETR demo board](https://tinytapeout.com/guides/get-started-demoboard-etr/).
 
-Tiny Tapeout is an educational project that aims to make it easier and cheaper than ever to get your digital and analog designs manufactured on a real chip.
+### Resources
 
-To learn more and get started, visit https://tinytapeout.com.
+I'm relying heavily on Harris & Harris' _Digital Design and Computer Architecture_ to dust off my theory, and [HDLBits](https://hdlbits.01xz.net) to get my fingers used to writing SystemVerilog.
 
-## Set up your Verilog project
+### AI Usage
 
-1. Add your Verilog files to the `src` folder.
-2. Edit the [info.yaml](info.yaml) and update information about your project, paying special attention to the `source_files` and `top_module` properties. If you are upgrading an existing Tiny Tapeout project, check out our [online info.yaml migration tool](https://tinytapeout.github.io/tt-yaml-upgrade-tool/).
-3. Edit [docs/info.md](docs/info.md) and add a description of your project.
-4. Adapt the testbench to your design. See [test/README.md](test/README.md) for more information.
+My digital design skills are a bit rusty, and I got started in late November (with a deadline of Jan 18th), so I'll have to leverage AI if I want to have a change to finish in time. Here are my hard guidelines:
+- All HDL will be written by hand.
+- Docs will be written by hand.
+- AI may be used to aid in debugging, especially when it comes to tooling.
+- Any "chore" task that does not directly affect the final design (like setting up tooling, configuring and debugging CI, etc), may be handed off to AI.
 
-The GitHub action will automatically build the ASIC files using [LibreLane](https://www.zerotoasiccourse.com/terminology/librelane/).
-
-## Enable GitHub actions to build the results page
-
-- [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
-
-## Resources
-
-- [FAQ](https://tinytapeout.com/faq/)
-- [Digital design lessons](https://tinytapeout.com/digital_design/)
-- [Learn how semiconductors work](https://tinytapeout.com/siliwiz/)
-- [Join the community](https://tinytapeout.com/discord)
-- [Build your design locally](https://www.tinytapeout.com/guides/local-hardening/)
-
-## What next?
-
-- [Submit your design to the next shuttle](https://app.tinytapeout.com/).
-- Edit [this README](README.md) and explain your design, how it works, and how to test it.
-- Share your project on your social network of choice:
-  - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [@TinyTapeout](https://www.linkedin.com/company/100708654/)
-  - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
-  - X (formerly Twitter) [#tinytapeout](https://twitter.com/hashtag/tinytapeout) [@tinytapeout](https://twitter.com/tinytapeout)
-  - Bluesky [@tinytapeout.com](https://bsky.app/profile/tinytapeout.com)
+Additionally, I'll be using GLM 5.3 (maybe 5.4 if it comes out during my development) and OpenCode exclusively. This to evaluate the digital design capabilities of SOTA open models on an open harness.
