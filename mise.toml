@@ -1,0 +1,36 @@
+[env]
+_.path = ["oss-cad-suite/bin"]
+
+[tasks.bootstrap]
+description = "Download the latest oss-cad-suite release into ./oss-cad-suite (skipped when already present)"
+dir = "{{ config_root }}"
+skip_if = "test -d oss-cad-suite/bin"
+run = '''
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo="YosysHQ/oss-cad-suite-build"
+dest="oss-cad-suite"
+
+case "$(uname -s):$(uname -m)" in
+  Linux:x86_64)  platform="linux-x64" ;;
+  Linux:aarch64) platform="linux-arm64" ;;
+  Darwin:arm64)  platform="darwin-arm64" ;;
+  Darwin:x86_64) platform="darwin-x64" ;;
+  *) echo "ERROR: unsupported platform: $(uname -s) $(uname -m)" >&2; exit 1 ;;
+esac
+
+# Asset URL for this platform from the latest release's asset list.
+api="$(curl -fsSL --retry 2 "https://api.github.com/repos/$repo/releases/latest")"
+url="$(printf '%s' "$api" | grep -o "https://github.com/$repo/releases/download/[^\"]*oss-cad-suite-$platform-[^\"]*\.tgz" | head -n 1 || true)"
+[ -z "$url" ] && { echo "ERROR: no oss-cad-suite-$platform asset in the latest release of $repo" >&2; exit 1; }
+
+echo "Downloading $url"
+work="$(mktemp -d .oss-cad-suite-dl.XXXXXX)"
+trap 'rm -rf "$work"' EXIT
+curl -fSL --retry 3 -o "$work/oss-cad-suite.tgz" "$url"
+tar -xzf "$work/oss-cad-suite.tgz" -C "$work"
+rm -f "$work/oss-cad-suite.tgz"
+mv "$work/oss-cad-suite" "$dest"
+echo "Installed $PWD/$dest"
+'''
