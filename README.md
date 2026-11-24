@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="assets/pec_logo.png" alt="Logo composed of a bird pecking down on the letters PEC" width="50%" />
+</p>
+
+
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
 
 # Tiny Tapeout Verilog Project Template
