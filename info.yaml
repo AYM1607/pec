@@ -4,8 +4,8 @@ project:
   author:       "Mariano Uvalle"
   discord:      ""
   description:  "A pico-pio-inspired protocol emulation chip"
-  language:     "Verilog" # TODO: Change to SystemVerilog
-  clock_hz:     50000000 # 50 kHz
+  language:     "SystemVerilog"
+  clock_hz:     50000000 # 50 MHz
 
   tiles: "8x4"
 
@@ -14,7 +14,7 @@ project:
 
   # Keep `PROJECT_SOURCES` in test/Makefile up to date.
   source_files:
-    - "project.v"
+    - "pec.sv"
 
 # Don't delete any pin even if unused.
 # This section is for the datasheet/website.
