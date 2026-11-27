@@ -34,3 +34,21 @@ rm -f "$work/oss-cad-suite.tgz"
 mv "$work/oss-cad-suite" "$dest"
 echo "Installed $PWD/$dest"
 '''
+
+[tasks.fpga-synth]
+description = "Synthesize a wrapper for the ULX3S ECP5 board"
+dir = "{{ config_root }}"
+run = '''
+mkdir -p build
+yosys ulx3s_top.ys
+nextpnr-ecp5 --85k --package CABGA381 --lpf ./fpga/ulx3s_v318.lpf --json build/ulx3s.json \
+             --textcfg build/ulx3s.config --freq 50
+ecppack build/ulx3s.config build/ulx3s.bit
+'''
+
+[tasks.fpga-flash]
+description = "Flash bitstream to ULX3S board"
+dir = "{{ config_root }}"
+run = '''
+openFPGALoader -b ulx3s build/ulx3s.bit
+'''
